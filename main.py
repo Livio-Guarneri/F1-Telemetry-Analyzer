@@ -131,7 +131,7 @@ driverListe.append(driver)
 
 def selectOtherDriver():
     while True:
-        print("You need to select all the driver you want the data")
+        print("5. You need to select all the driver you want the data")
         print("")
         print("Select your choice: ")
         print("")
@@ -174,7 +174,7 @@ for driver in driverListeTelemetry:
     distanceMax.append(driver["distance"].max())
 
 def whichGraph():
-    print("You need to choose which graph you want to see")
+    print("6. You need to choose which graph you want to see")
     print("")
     print("1. Speed as a function of time")
     print("2. Time as a function of time")
@@ -201,6 +201,10 @@ def whichGraph():
         ax.set_ylabel("Speed (Km/h)")
         ax.legend()
         plt.show()
+        value = saveGraphOption()
+        if value:
+            fig.savefig("distance.png")
+        
     elif n == 2:
         fig, ax = plt.subplots()
         for driver in driverListeTelemetry:
@@ -210,6 +214,10 @@ def whichGraph():
         ax.set_ylabel("Time (s)")
         ax.legend()
         plt.show()
+        value = saveGraphOption()
+        if value:
+            fig.savefig("time.png")
+        
     else:
         fig, ax = plt.subplots()
         for driver in driverListeTelemetry:
@@ -225,5 +233,32 @@ def whichGraph():
         ax.legend()
         ax2.legend()
         plt.show()
+        value = saveGraphOption()
+        if value:
+            fig.savefig("distance.png")
+            fig2.savefig("time.png")
+        
+
+def saveGraphOption():
+    print("7.Do you want to Export Graph")
+    print("")
+    print("1. Export Graph")
+    print("2. Leave")
+    print("")
+    n = input("Select your choice (1-2): ")
+    print("")
+    try:
+        n = int(n)
+    except ValueError:
+        print("ERROR: The value must be an integer")
+        print("")
+        return saveGraphOption()
+    if n > 2 or n < 1:
+        print("ERROR: The value must be in the range of (1-2)")
+        print("")
+        return saveGraphOption()
+    if n == 1:
+        return True
+    return False
 
 whichGraph()
