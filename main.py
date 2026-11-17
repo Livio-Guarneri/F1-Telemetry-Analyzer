@@ -155,7 +155,7 @@ def selectOtherDriver():
 selectOtherDriver()
 
 for driver in driverListe:
-    telemetry = session.laps.pick_driver(driver).pick_fastest().get_telemetry()
+    telemetry = session.laps.pick_drivers(driver).pick_fastest().get_telemetry()
     dico = {"name": driver, "time": telemetry["Time"], "speed": telemetry["Speed"], "distance": telemetry["Distance"], "color": fastf1.plotting.get_driver_color(driver, session)}
     driverListeTelemetry.append(dico)
 
@@ -250,3 +250,13 @@ def saveGraphOption():
             print("")
 
 whichGraph()
+
+
+
+for driver in driverListeTelemetry:
+    print(f"Driver: {driver['name']}")
+    print(f"Top speed: {driver['speed'].max()} km/h")
+    print(f"Average speed: {driver['speed'].mean():.2f} km/h")
+    best_lap = session.laps.pick_drivers(driver['name']).pick_fastest()
+    print(f"Best lap time: {best_lap['LapTime']}")
+    print("")
