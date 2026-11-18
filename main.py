@@ -160,8 +160,29 @@ for driver in driverListe:
     dico = {"name": driver, "time": telemetry["Time"], "speed": telemetry["Speed"], "distance": telemetry["Distance"], "color": fastf1.plotting.get_driver_color(driver, session), "lapTime": best_lap["LapTime"], "bestLap": best_lap}
     driverListeTelemetry.append(dico)
 
+def whatShow():
+    print("6. What do you want to see")
+    print("")
+    print("1.Graph")
+    print("2.Stats")
+    print("3.Both")
+    print("")
+    while True:
+        n = input("Select your choice (1-3): ")
+        print("")
+        try:
+            n = int(n)
+            if n >=1 and n <= 3:
+                return n
+            else:
+                print("ERROR: The value must be in the range of (1-3)")
+                print("")
+        except ValueError:
+            print("ERROR: The value must be an integer")
+            print("")
+
 def whichGraph():
-    print("6. You need to choose which graph you want to see")
+    print("7. You need to choose which graph you want to see")
     print("")
     print("1. Speed as a function of time")
     print("2. Time as a function of time")
@@ -229,7 +250,7 @@ def whichGraph():
         
 
 def saveGraphOption():
-    print("7.Do you want to Export Graph")
+    print("8.Do you want to Export Graph")
     print("")
     print("1. Export Graph")
     print("2. Leave")
@@ -250,7 +271,7 @@ def saveGraphOption():
             print("ERROR: The value must be an integer")
             print("")
 
-whichGraph()
+
 
 def formatLapTime(time):
     total = time.total_seconds()
@@ -290,4 +311,20 @@ def showGap():
             print(f"Gap: +{gap:.3f}s")
             print("")
 
-showGap()
+def showRanking():
+    ranking = sorted(driverListeTelemetry, key=lambda d: d['lapTime'])
+
+    print("===RANKING===")
+    for i in range(len(ranking)):
+        print(f"{i+1}. {ranking[i]['name']} - {formatLapTime(ranking[i]['lapTime'])}")
+
+n = whatShow()
+if n == 1:
+    whichGraph()
+elif n == 2:
+    showGap()
+    showRanking()
+else:
+    whichGraph()
+    showGap()
+    showRanking()

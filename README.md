@@ -1,25 +1,29 @@
 # F1 Telemetry Analyzer
 
-Application Python utilisant FastF1 pour récupérer et comparer les données de télémétrie de Formula 1.
+Python application using FastF1 to retrieve and compare Formula 1 telemetry data.
 
-## Fonctionnalités actuelles
+## Features
 
-- Sélection d'une saison (1950-2026)
-- Sélection d'un Grand Prix
-- Sélection d'une session :
+- Season selection (1950-2026)
+- Grand Prix selection
+- Session selection:
   - FP1
   - FP2
   - FP3
-  - Qualifications
-  - Course
-- Sélection d'un ou plusieurs pilotes
-- Récupération automatique des données FastF1
-- Affichage du graphique de vitesse
-- Affichage du graphique du temps au tour
-- Comparaison de plusieurs pilotes sur les mêmes graphiques
-- Validation des entrées utilisateur
+  - Qualifying
+  - Race
+- Single or multi-driver comparison
+- Speed analysis
+- Lap time analysis
+- Driver ranking
+- Gap to leader calculation
+- Sector analysis (S1, S2, S3)
+- Top speed statistics
+- Average speed statistics
+- Graph export as PNG
+- Input validation
 
-## Technologies utilisées
+## Technologies
 
 - Python
 - FastF1
@@ -28,62 +32,84 @@ Application Python utilisant FastF1 pour récupérer et comparer les données de
 
 ## Installation
 
-### Cloner le dépôt
+### Clone the repository
 
 ```bash
 git clone https://github.com/Livio-Guarneri/F1-Telemetry-Analyzer.git
+cd F1-Telemetry-Analyzer
 ```
 
-### Installer les dépendances
+### Install dependencies
 
 ```bash
 pip install fastf1 matplotlib numpy
 ```
 
-### Lancer l'application
+### Run the application
 
 ```bash
 python main.py
 ```
 
-## Comment utiliser le programme
+## Usage
 
-1. Choisir une saison.
-2. Choisir un Grand Prix.
-3. Choisir une session.
-4. Choisir un ou plusieurs pilotes.
-5. Sélectionner le graphique souhaité.
-6. Visualiser les résultats.
+1. Select a season.
+2. Select a Grand Prix.
+3. Select a session.
+4. Select one or more drivers.
+5. Choose:
+   - Graphs
+   - Statistics
+   - Both
+6. Analyze the results.
 
-## Exemple
+## Statistics Available
 
-Le programme permet de comparer plusieurs pilotes lors d'une même séance afin d'analyser :
+For each selected driver:
 
-- leur vitesse sur le circuit ;
-- leur temps au tour ;
-- leurs performances respectives.
+- Best lap time
+- Gap to the fastest driver
+- Sector 1 time
+- Sector 2 time
+- Sector 3 time
+- Top speed
+- Average speed
 
-## Améliorations prévues
+## Graphs Available
 
-- Calcul automatique du delta de temps
-- Statistiques détaillées
-- Export PDF
-- Sauvegarde automatique des graphiques
-- Interface graphique
-- Dashboard interactif
-- Analyse avancée des performances
+- Speed vs Distance
+- Lap Time vs Distance
+- Multi-driver comparison
 
-## Objectif du projet
+## Example Output
 
-Ce projet a été créé afin d'améliorer mes compétences en :
+```text
+Driver: VER
+Top speed: 337 km/h
+Average speed: 229.81 km/h
+Best lap time: 1:24.582
+S1: 27.518s
+S2: 33.942s
+S3: 23.122s
+Gap: +0.000s
+```
 
-- développement Python ;
-- manipulation de données ;
-- visualisation de données ;
-- analyse de données sportives.
+## Future Improvements
 
-Il s'inscrit dans un parcours d'apprentissage orienté vers le développement logiciel et le sport automobile.
+- Graphical User Interface (GUI)
+- Additional telemetry analysis
+- Interactive visualizations
 
-## Auteur
+## Purpose
 
-Projet personnel développé par **Livio Guarneri**.
+This project was created to improve my skills in:
+
+- Python development
+- Data analysis
+- Data visualization
+- API integration
+- Software design
+
+## Author
+
+**Livio Guarneri**
