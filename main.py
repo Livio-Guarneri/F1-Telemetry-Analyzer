@@ -156,7 +156,8 @@ selectOtherDriver()
 
 for driver in driverListe:
     telemetry = session.laps.pick_drivers(driver).pick_fastest().get_telemetry()
-    dico = {"name": driver, "time": telemetry["Time"], "speed": telemetry["Speed"], "distance": telemetry["Distance"], "color": fastf1.plotting.get_driver_color(driver, session)}
+    best_lap = session.laps.pick_drivers(driver).pick_fastest()
+    dico = {"name": driver, "time": telemetry["Time"], "speed": telemetry["Speed"], "distance": telemetry["Distance"], "color": fastf1.plotting.get_driver_color(driver, session), "lapTime": best_lap["LapTime"], "bestLap": best_lap}
     driverListeTelemetry.append(dico)
 
 def whichGraph():
@@ -251,12 +252,42 @@ def saveGraphOption():
 
 whichGraph()
 
+def formatLapTime(time):
+    total = time.total_seconds()
+
+    minutes = int(total // 60)
+    seconds = total % 60 
+
+    return f"{minutes}:{seconds:06.3f}"
 
 
-for driver in driverListeTelemetry:
-    print(f"Driver: {driver['name']}")
-    print(f"Top speed: {driver['speed'].max()} km/h")
-    print(f"Average speed: {driver['speed'].mean():.2f} km/h")
-    best_lap = session.laps.pick_drivers(driver['name']).pick_fastest()
-    print(f"Best lap time: {best_lap['LapTime']}")
+def showGap():
+    fasterDriver = driverListeTelemetry[0]
+    faster = driverListeTelemetry[0]["lapTime"]
+    for driver in driverListeTelemetry:
+        if driver["lapTime"] < faster:
+            faster = driver["lapTime"]
+            fasterDriver = driver
+    print(f"Driver: {fasterDriver['name']}")
+    print(f"Top speed: {fasterDriver['speed'].max()} km/h")
+    print(f"Average speed: {fasterDriver['speed'].mean():.2f} km/h")
+    print(f"Best lap time: {formatLapTime(fasterDriver['lapTime'])}")
+    print(f"S1: {(fasterDriver['bestLap']['Sector1Time']).total_seconds():.3f}s")
+    print(f"S2: {(fasterDriver['bestLap']['Sector2Time']).total_seconds():.3f}s")
+    print(f"S3: {(fasterDriver['bestLap']['Sector3Time']).total_seconds():.3f}s")
+    print(f"Gap: +{0:.3f}s")
     print("")
+    for driver in driverListeTelemetry:
+        if driver["name"] != fasterDriver["name"]:
+            print(f"Driver: {driver['name']}")
+            print(f"Top speed: {driver['speed'].max()} km/h")
+            print(f"Average speed: {driver['speed'].mean():.2f} km/h")
+            print(f"Best lap time: {formatLapTime(driver['lapTime'])}")
+            print(f"S1: {(driver['bestLap']['Sector1Time']).total_seconds():.3f}s")
+            print(f"S2: {(driver['bestLap']['Sector2Time']).total_seconds():.3f}s")
+            print(f"S3: {(driver['bestLap']['Sector3Time']).total_seconds():.3f}s")
+            gap = (driver['lapTime'] - faster).total_seconds()
+            print(f"Gap: +{gap:.3f}s")
+            print("")
+
+showGap()
